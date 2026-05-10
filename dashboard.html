@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CUURS (Unified Citizen Utility & Reporting System)</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <!-- Welcome Popup -->
+    <div id="welcomePopup" class="popup-overlay">
+        <div class="popup-message">
+            <p>Welcome back, <span id="popupUsername">Admin</span>!</p>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>🏛️ CUURS Admin</h1>
+            <span class="system-name">Citizen Utility & Reporting System</span>
+        </div>
+        <div class="navbar-right">
+            <span class="admin-status">👤 <span id="adminUsername">Admin</span></span>
+            <a href="#" class="logout_btn" onclick="handleLogout(event)">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="nav-section">
+            <h3>DASHBOARD</h3>
+            <a href="dashboard.html" class="nav-item active">📊 Overview</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>UTILITY MANAGEMENT</h3>
+            <a href="admin-outages.html" class="nav-item">⚠️ Manage Outages</a>
+            <a href="admin-send-alert.html" class="nav-item">📱 Send SMS Alerts</a>
+            <a href="admin-view-reports.html" class="nav-item">📋 View Reports</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>ADMINISTRATION</h3>
+            <a href="admin-users.html" class="nav-item">👥 User Management</a>
+            <a href="admin-settings.html" class="nav-item">⚙️ Settings</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>PUBLIC</h3>
+            <a href="status-portal.html" class="nav-item">🌍 Public Status Portal</a>
+            <a href="citizen-portal.html" class="nav-item">📲 Citizen Portal</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h2>Admin Dashboard Overview</h2>
+            <p>Monitor utility services and citizen reports across Rwanda</p>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-container">
+            <div class="kpi-card">
+                <div class="kpi-icon">⚠️</div>
+                <div class="kpi-content">
+                    <h3>Active Outages</h3>
+                    <p class="kpi-value">12</p>
+                    <small>Across 3 districts</small>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon">📋</div>
+                <div class="kpi-content">
+                    <h3>Pending Reports</h3>
+                    <p class="kpi-value">48</p>
+                    <small>Awaiting review</small>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon">✅</div>
+                <div class="kpi-content">
+                    <h3>Resolved Issues</h3>
+                    <p class="kpi-value">234</p>
+                    <small>This month</small>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon">👥</div>
+                <div class="kpi-content">
+                    <h3>Active Citizens</h3>
+                    <p class="kpi-value">3,847</p>
+                    <small>Registered users</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h3>Quick Actions</h3>
+            <div class="actions-grid">
+                <button class="action-btn" onclick="window.location.href='admin-send-alert.html'">
+                    <span class="action-icon">📱</span>
+                    <span>Send SMS Alert</span>
+                </button>
+                <button class="action-btn" onclick="window.location.href='admin-outages.html'">
+                    <span class="action-icon">⚠️</span>
+                    <span>Log Outage</span>
+                </button>
+                <button class="action-btn" onclick="window.location.href='admin-view-reports.html'">
+                    <span class="action-icon">📋</span>
+                    <span>Review Reports</span>
+                </button>
+                <button class="action-btn" onclick="window.location.href='admin-users.html'">
+                    <span class="action-icon">👥</span>
+                    <span>Manage Users</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="activity-section">
+            <h3>Recent Activity</h3>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-time">2 hours ago</div>
+                    <div class="activity-text"><strong>Alert Sent:</strong> Water outage in Kigali City - Gasabo sector</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-time">4 hours ago</div>
+                    <div class="activity-text"><strong>Report Received:</strong> Fallen power pole - Muhanga City</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-time">6 hours ago</div>
+                    <div class="activity-text"><strong>Outage Resolved:</strong> Electricity restored - Gitarama sector</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-time">1 day ago</div>
+                    <div class="activity-text"><strong>New User:</strong> Jean Kabera from Kigali registered</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Service Status by Region -->
+        <div class="service-status">
+            <h3>Service Status by Region</h3>
+            <div class="status-grid">
+                <div class="region-card operational">
+                    <h4>Kigali City</h4>
+                    <div class="status-indicator">⚡ Electricity: Operational</div>
+                    <div class="status-indicator">💧 Water: Partial Outage</div>
+                    <div class="status-indicator">📶 Telecom: Operational</div>
+                </div>
+                <div class="region-card operational">
+                    <h4>Southern Province</h4>
+                    <div class="status-indicator">⚡ Electricity: Operational</div>
+                    <div class="status-indicator">💧 Water: Operational</div>
+                    <div class="status-indicator">📶 Telecom: Operational</div>
+                </div>
+                <div class="region-card warning">
+                    <h4>Western Province</h4>
+                    <div class="status-indicator">⚡ Electricity: Partial Outage</div>
+                    <div class="status-indicator">💧 Water: Operational</div>
+                    <div class="status-indicator">📶 Telecom: Operational</div>
+                </div>
+                <div class="region-card operational">
+                    <h4>Northern Province</h4>
+                    <div class="status-indicator">⚡ Electricity: Operational</div>
+                    <div class="status-indicator">💧 Water: Operational</div>
+                    <div class="status-indicator">📶 Telecom: Operational</div>
+                </div>
+                <div class="region-card operational">
+                    <h4>Eastern Province</h4>
+                    <div class="status-indicator">⚡ Electricity: Operational</div>
+                    <div class="status-indicator">💧 Water: Operational</div>
+                    <div class="status-indicator">📶 Telecom: Operational</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminName = localStorage.getItem('username') || 'Admin';
+            document.getElementById('adminUsername').textContent = adminName;
+            document.getElementById('popupUsername').textContent = adminName;
+            
+            // Show welcome popup
+            const popup = document.getElementById('welcomePopup');
+            popup.style.display = 'flex';
+            
+            setTimeout(function() {
+                popup.style.opacity = '0';
+                popup.style.pointerEvents = 'none';
+                setTimeout(function() {
+                    popup.style.display = 'none';
+                }, 500);
+            }, 3000);
+        });
+
+        function handleLogout(event) {
+            event.preventDefault();
+            localStorage.removeItem('username');
+            window.location.href = 'login_form.html';
+        }
+    </script>
+</body>
+</html>

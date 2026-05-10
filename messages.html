@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="messages.css">
+</head>
+<body>
+    <div class="navbar">
+        <h1>Messages</h1>
+        <a href="#" class="logout_btn" onclick="handleLogout(event)">Logout</a>
+    </div>
+
+    <main class="content">
+        <h2>Your Messages</h2>
+        <p>Recent conversations are shown below.</p>
+        <div class="cards_container">
+            <div class="card">
+                <h3>🗨️ Alice</h3>
+                <p>Hey, are you coming to the meeting?</p>
+            </div>
+            <div class="card">
+                <h3>🗨️ Bob</h3>
+                <p>Thanks for the update!</p>
+            </div>
+            <div class="card">
+                <h3>🗨️ Carol</h3>
+                <p>Let's catch up soon.</p>
+            </div>
+        </div>
+        <p><a href="dashboard.html">Back to Dashboard</a></p>
+    </main>
+
+    <script>
+        function handleLogout(event) {
+            event.preventDefault();
+            localStorage.removeItem('username');
+            window.location.href = 'login_form.html';
+        }
+    </script>
+</body>
+</html>

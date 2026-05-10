@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - CUURS Admin</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="admin-forms.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>🏛️ CUURS Admin</h1>
+            <span class="system-name">Citizen Utility & Reporting System</span>
+        </div>
+        <div class="navbar-right">
+            <span class="admin-status">👤 <span id="adminUsername">Admin</span></span>
+            <a href="#" class="logout_btn" onclick="handleLogout(event)">Logout</a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <div class="nav-section">
+            <h3>DASHBOARD</h3>
+            <a href="dashboard.html" class="nav-item">📊 Overview</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>UTILITY MANAGEMENT</h3>
+            <a href="admin-outages.html" class="nav-item">⚠️ Manage Outages</a>
+            <a href="admin-send-alert.html" class="nav-item">📱 Send SMS Alerts</a>
+            <a href="admin-view-reports.html" class="nav-item">📋 View Reports</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>ADMINISTRATION</h3>
+            <a href="admin-users.html" class="nav-item">👥 User Management</a>
+            <a href="admin-settings.html" class="nav-item active">⚙️ Settings</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>PUBLIC</h3>
+            <a href="status-portal.html" class="nav-item">🌍 Public Status Portal</a>
+            <a href="citizen-portal.html" class="nav-item">📲 Citizen Portal</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h2>⚙️ System Settings</h2>
+            <p>Configure CUURS system preferences and integrations</p>
+        </div>
+
+        <div class="form-container" style="grid-template-columns: 250px 1fr; margin-bottom: 40px;">
+            <div style="background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); overflow: hidden; height: fit-content;">
+                <div style="padding: 20px; border-bottom: 1px solid #eee;">
+                    <h3 style="font-size: 14px; color: #333; margin: 0; font-weight: 600;">SETTINGS</h3>
+                </div>
+                <nav style="display: flex; flex-direction: column;">
+                    <button class="settings-nav-item active" onclick="showSection('general')">🌐 General</button>
+                    <button class="settings-nav-item" onclick="showSection('sms')">📱 SMS Integration</button>
+                    <button class="settings-nav-item" onclick="showSection('notifications')">🔔 Notifications</button>
+                    <button class="settings-nav-item" onclick="showSection('security')">🔒 Security</button>
+                </nav>
+            </div>
+
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+                <!-- General Settings -->
+                <div id="general-section" class="setting-section">
+                    <h3>General Settings</h3>
+                    <form onsubmit="handleSaveSettings(event)">
+                        <div class="form-group">
+                            <label>System Name</label>
+                            <input type="text" value="Unified Citizen Utility & Reporting System" required>
+                        </div>
+                        <div class="form-group">
+                            <label>System Email</label>
+                            <input type="email" value="info@cuurs.rw" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Support Phone</label>
+                            <input type="tel" value="+250788123456" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Country</label>
+                            <input type="text" value="Rwanda" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Admin Dashboard URL</label>
+                            <input type="text" value="https://admin.cuurs.rw" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">💾 Save Settings</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- SMS Integration -->
+                <div id="sms-section" class="setting-section" style="display: none;">
+                    <h3>SMS Integration (Africa's Talking)</h3>
+                    <form onsubmit="handleSaveSettings(event)">
+                        <div class="form-group">
+                            <label>API Key *</label>
+                            <input type="password" placeholder="Enter Africa's Talking API Key" required>
+                            <small style="color: #999;">Your API key for Africa's Talking service</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Username *</label>
+                            <input type="text" placeholder="Your Africa's Talking username" required>
+                        </div>
+                        <div class="form-group">
+                            <label>SMS Sender ID</label>
+                            <input type="text" placeholder="e.g., CUURS" value="CUURS">
+                        </div>
+                        <div class="form-group">
+                            <label>Enable SMS Alerts</label>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" checked>
+                                    Enable SMS notifications for alerts
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Test SMS</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="tel" placeholder="+250..." style="flex: 1;">
+                                <button type="button" class="btn-secondary">Send Test</button>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">💾 Save SMS Settings</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Notification Settings -->
+                <div id="notifications-section" class="setting-section" style="display: none;">
+                    <h3>Notification Settings</h3>
+                    <form onsubmit="handleSaveSettings(event)">
+                        <div class="form-section">
+                            <h4 style="font-size: 14px; color: #1849a8; margin-bottom: 15px;">Alert Notifications</h4>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" checked>
+                                    Send email on new citizen report
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" checked>
+                                    Send email on high-priority issues
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox">
+                                    Send daily summary report
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-section">
+                            <h4 style="font-size: 14px; color: #1849a8; margin-bottom: 15px;">SMS Notifications</h4>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" checked>
+                                    Send SMS alerts to managers
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox">
+                                    Send SMS for resolved issues
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">💾 Save Notifications</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Security Settings -->
+                <div id="security-section" class="setting-section" style="display: none;">
+                    <h3>Security Settings</h3>
+                    <form onsubmit="handleSaveSettings(event)">
+                        <div class="form-section">
+                            <h4 style="font-size: 14px; color: #1849a8; margin-bottom: 15px;">Access Control</h4>
+                            <div class="form-group">
+                                <label>Session Timeout (minutes)</label>
+                                <input type="number" value="30" min="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password Policy</label>
+                                <div class="checkbox-group">
+                                    <label>
+                                        <input type="checkbox" checked>
+                                        Require strong passwords (8+ chars)
+                                    </label>
+                                </div>
+                                <div class="checkbox-group">
+                                    <label>
+                                        <input type="checkbox" checked>
+                                        Require password change on first login
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-section">
+                            <h4 style="font-size: 14px; color: #1849a8; margin-bottom: 15px;">Two-Factor Authentication</h4>
+                            <div class="form-group">
+                                <label>Enable 2FA for Admin Users</label>
+                                <div class="checkbox-group">
+                                    <label>
+                                        <input type="checkbox">
+                                        Require 2FA for all admin accounts
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">🔒 Save Security Settings</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .settings-nav-item {
+            padding: 15px 20px;
+            border: none;
+            background: transparent;
+            text-align: left;
+            cursor: pointer;
+            color: #666;
+            font-size: 14px;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+
+        .settings-nav-item:hover {
+            background-color: #f5f5f5;
+            border-left-color: #1849a8;
+        }
+
+        .settings-nav-item.active {
+            background-color: #f5f5f5;
+            border-left-color: #1849a8;
+            color: #1849a8;
+            font-weight: 600;
+        }
+
+        .setting-section h3 {
+            color: #1849a8;
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+
+        .setting-section h4 {
+            color: #1849a8 !important;
+        }
+
+        .form-section {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminName = localStorage.getItem('username') || 'Admin';
+            document.getElementById('adminUsername').textContent = adminName;
+        });
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.setting-section').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.settings-nav-item').forEach(el => el.classList.remove('active'));
+
+            // Show selected section
+            document.getElementById(sectionId + '-section').style.display = 'block';
+            event.target.classList.add('active');
+        }
+
+        function handleSaveSettings(event) {
+            event.preventDefault();
+            alert('✅ Settings saved successfully');
+        }
+
+        function handleLogout(event) {
+            event.preventDefault();
+            localStorage.removeItem('username');
+            window.location.href = 'login_form.html';
+        }
+    </script>
+</body>
+</html>

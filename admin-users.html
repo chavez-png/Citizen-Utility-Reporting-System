@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - CUURS Admin</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="admin-forms.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>🏛️ CUURS Admin</h1>
+            <span class="system-name">Citizen Utility & Reporting System</span>
+        </div>
+        <div class="navbar-right">
+            <span class="admin-status">👤 <span id="adminUsername">Admin</span></span>
+            <a href="#" class="logout_btn" onclick="handleLogout(event)">Logout</a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <div class="nav-section">
+            <h3>DASHBOARD</h3>
+            <a href="dashboard.html" class="nav-item">📊 Overview</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>UTILITY MANAGEMENT</h3>
+            <a href="admin-outages.html" class="nav-item">⚠️ Manage Outages</a>
+            <a href="admin-send-alert.html" class="nav-item">📱 Send SMS Alerts</a>
+            <a href="admin-view-reports.html" class="nav-item">📋 View Reports</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>ADMINISTRATION</h3>
+            <a href="admin-users.html" class="nav-item active">👥 User Management</a>
+            <a href="admin-settings.html" class="nav-item">⚙️ Settings</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>PUBLIC</h3>
+            <a href="status-portal.html" class="nav-item">🌍 Public Status Portal</a>
+            <a href="citizen-portal.html" class="nav-item">📲 Citizen Portal</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h2>👥 User Management</h2>
+            <p>Manage admin staff and system users</p>
+        </div>
+
+        <!-- Tabs -->
+        <div style="background: white; padding: 15px 0; margin-bottom: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+            <div style="display: flex; gap: 0; border-bottom: 2px solid #eee;">
+                <button class="tab-btn active" onclick="switchTab('admins')">👨‍💼 Admin Staff (${5})</button>
+                <button class="tab-btn" onclick="switchTab('citizens')">👤 Citizens (${3847})</button>
+            </div>
+        </div>
+
+        <!-- Admin Staff Tab -->
+        <div id="admins-tab" class="tab-content">
+            <div style="display: flex; gap: 15px; margin-bottom: 25px;">
+                <input type="search" placeholder="Search staff..." style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <button class="btn-primary" onclick="openAddUserModal()">+ Add Admin</button>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Organization</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Last Login</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>John Niyigena</strong></td>
+                        <td>john.niyigena@reg.rw</td>
+                        <td>REG (Electricity)</td>
+                        <td>Manager</td>
+                        <td><span class="badge badge-success">ACTIVE</span></td>
+                        <td>Today 10:30</td>
+                        <td>
+                            <div class="action-icons">
+                                <button class="icon-btn icon-btn-primary" title="Edit">✏️</button>
+                                <button class="icon-btn icon-btn-danger" title="Deactivate">⛔</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Beatrice Mudenge</strong></td>
+                        <td>beatrice.mudenge@wasac.rw</td>
+                        <td>WASAC (Water)</td>
+                        <td>Coordinator</td>
+                        <td><span class="badge badge-success">ACTIVE</span></td>
+                        <td>Today 14:15</td>
+                        <td>
+                            <div class="action-icons">
+                                <button class="icon-btn icon-btn-primary" title="Edit">✏️</button>
+                                <button class="icon-btn icon-btn-danger" title="Deactivate">⛔</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>David Karwera</strong></td>
+                        <td>david.karwera@reg.rw</td>
+                        <td>REG (Electricity)</td>
+                        <td>Staff</td>
+                        <td><span class="badge badge-success">ACTIVE</span></td>
+                        <td>Yesterday 09:00</td>
+                        <td>
+                            <div class="action-icons">
+                                <button class="icon-btn icon-btn-primary" title="Edit">✏️</button>
+                                <button class="icon-btn icon-btn-danger" title="Deactivate">⛔</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Citizens Tab -->
+        <div id="citizens-tab" class="tab-content" style="display: none;">
+            <div style="display: flex; gap: 15px; margin-bottom: 25px;">
+                <input type="search" placeholder="Search citizens..." style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <select style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <option value="">All Regions</option>
+                    <option value="kigali">Kigali City</option>
+                    <option value="southern">Southern Province</option>
+                </select>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Region</th>
+                        <th>Reports Made</th>
+                        <th>Join Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Jean Habimana</strong></td>
+                        <td>+250700000001</td>
+                        <td>Kigali - Gasabo</td>
+                        <td>3</td>
+                        <td>2025-12-15</td>
+                        <td><span class="badge badge-success">ACTIVE</span></td>
+                        <td>
+                            <div class="action-icons">
+                                <button class="icon-btn icon-btn-primary" title="View">👁️</button>
+                                <button class="icon-btn icon-btn-danger" title="Suspend">⛔</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Marie Uwimana</strong></td>
+                        <td>+250700000002</td>
+                        <td>Muhanga City</td>
+                        <td>5</td>
+                        <td>2025-11-20</td>
+                        <td><span class="badge badge-success">ACTIVE</span></td>
+                        <td>
+                            <div class="action-icons">
+                                <button class="icon-btn icon-btn-primary" title="View">👁️</button>
+                                <button class="icon-btn icon-btn-danger" title="Suspend">⛔</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Admin User</h2>
+                <button class="close-btn" onclick="closeAddUserModal()">&times;</button>
+            </div>
+            <form onsubmit="handleAddUser(event)">
+                <div class="form-group">
+                    <label for="userName">Full Name *</label>
+                    <input type="text" id="userName" required>
+                </div>
+                <div class="form-group">
+                    <label for="userEmail">Email *</label>
+                    <input type="email" id="userEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="userOrg">Organization *</label>
+                    <select id="userOrg" required>
+                        <option value="">-- Select --</option>
+                        <option value="reg">REG (Electricity)</option>
+                        <option value="wasac">WASAC (Water)</option>
+                        <option value="system">System Admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="userRole">Role *</label>
+                    <select id="userRole" required>
+                        <option value="">-- Select --</option>
+                        <option value="manager">Manager</option>
+                        <option value="coordinator">Coordinator</option>
+                        <option value="staff">Staff</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="userPassword">Temporary Password *</label>
+                    <input type="password" id="userPassword" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeAddUserModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Create User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .tab-btn {
+            padding: 15px 25px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: #1849a8;
+            border-bottom-color: #1849a8;
+        }
+
+        .tab-btn:hover {
+            color: #1849a8;
+        }
+
+        .tab-content {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminName = localStorage.getItem('username') || 'Admin';
+            document.getElementById('adminUsername').textContent = adminName;
+        });
+
+        function switchTab(tab) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById(tab + '-tab').style.display = 'block';
+            event.target.classList.add('active');
+        }
+
+        function openAddUserModal() {
+            document.getElementById('userModal').classList.add('show');
+        }
+
+        function closeAddUserModal() {
+            document.getElementById('userModal').classList.remove('show');
+        }
+
+        function handleAddUser(event) {
+            event.preventDefault();
+            alert('✅ User created successfully');
+            closeAddUserModal();
+        }
+
+        function handleLogout(event) {
+            event.preventDefault();
+            localStorage.removeItem('username');
+            window.location.href = 'login_form.html';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('userModal');
+            if (event.target === modal) {
+                modal.classList.remove('show');
+            }
+        };
+    </script>
+</body>
+</html>

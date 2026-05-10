@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utility Status Portal - CUURS</title>
+    <link rel="stylesheet" href="citizen-portal.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>🌍 CUURS Status Portal</h1>
+            <span class="subtitle">Check Utility Status by Region</span>
+        </div>
+        <div class="navbar-right">
+            <a href="citizen-portal.html" class="nav-link">🏠 Home</a>
+            <a href="citizen-report-form.html" class="nav-link">📋 Report Issue</a>
+            <a href="citizen-portal.html" class="nav-link">👤 My Account</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-header">
+            <h2>⚡ Live Utility Status by Region</h2>
+            <p>Real-time updates on water, electricity, and telecom services across Rwanda</p>
+        </div>
+
+        <!-- Filter/Search -->
+        <div class="filter-section">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                <div>
+                    <label>Select Province:</label>
+                    <select id="provinceFilter" onchange="updateDistrictFilter()">
+                        <option value="">All Provinces</option>
+                        <option value="kigali">Kigali City</option>
+                        <option value="southern">Southern Province</option>
+                        <option value="western">Western Province</option>
+                        <option value="northern">Northern Province</option>
+                        <option value="eastern">Eastern Province</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Select District:</label>
+                    <select id="districtFilter">
+                        <option value="">All Districts</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Filter by Service:</label>
+                    <select id="serviceFilter">
+                        <option value="">All Services</option>
+                        <option value="electricity">⚡ Electricity</option>
+                        <option value="water">💧 Water</option>
+                        <option value="telecom">📶 Telecom</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Cards Grid -->
+        <div class="status-grid">
+            <!-- Kigali City -->
+            <div class="region-status-card">
+                <div class="region-header">
+                    <h3>🏙️ Kigali City</h3>
+                    <span class="update-time">Updated: Today 14:30</span>
+                </div>
+
+                <div class="service-item operational">
+                    <div class="service-icon">⚡</div>
+                    <div class="service-content">
+                        <h4>Electricity (REG)</h4>
+                        <p class="status operational">✅ Operational</p>
+                        <small>Gasabo, Kicukiro, Nyarugenge</small>
+                    </div>
+                </div>
+
+                <div class="service-item warning">
+                    <div class="service-icon">💧</div>
+                    <div class="service-content">
+                        <h4>Water Supply (WASAC)</h4>
+                        <p class="status warning">⚠️ Partial Outage</p>
+                        <small>Gasabo sector affected until 18:00</small>
+                    </div>
+                </div>
+
+                <div class="service-item operational">
+                    <div class="service-icon">📶</div>
+                    <div class="service-content">
+                        <h4>Telecom</h4>
+                        <p class="status operational">✅ Operational</p>
+                        <small>All providers operational</small>
+                    </div>
+                </div>
+
+                <button class="view-details-btn" onclick="viewRegionDetails('kigali')">View Details →</button>
+            </div>
+
+            <!-- Southern Province -->
+            <div class="region-status-card">
+                <div class="region-header">
+                    <h3>🌍 Southern Province</h3>
+                    <span class="update-time">Updated: Today 14:15</span>
+                </div>
+
+                <div class="service-item operational">
+                    <div class="service-icon">⚡</div>
+                    <div class="service-content">
+                        <h4>Electricity (REG)</h4>
+                        <p class="status operational">✅ Operational</p>
+                        <small>All districts stable</small>
+                    </div>
+                </div>
+
+                <div class="service-item operational">
+                    <div class="service-icon">💧</div>
+                    <div class="service-content">
+                        <h4>Water Supply (WASAC)</h4>
+                        <p class="status operational">✅ Operational</p>
+                        <small>All districts stable</small>
+                    </div>
+                </div>
+
+                <div class="service-item operational">
+                    <div class="service-icon">📶</div>
+                    <div class="service-content">
+                        <h4>Telecom</h4>
+                        <p class="status operational">✅ Operational</p>
+                        <small>All providers operational</small>
+                    </div>
+                </div>
+
+                <button class="view-details-btn" onclick="viewRegionDetails('southern')">View Details →</button>
+            </div>
+
+            <!-- Western Province -->
+            <div class="region-status-card">
+                <div class="region-header">
+                    <h3>🌍 Western Province</h3>
+                    <span class="update-time">Updated: Today 12:45</span>
+                </div>
+
+                <div class="service-item warning">
+                    <div class="service-icon">⚡</div>
+                    <div class="service-content">
+                        <h4>Electricity (REG)</h4>
+                        <p class="status warning">⚠️ Partial Outage</p>
+                        <small>Nyamasheke district, expected 20:00</small>
+                    </div>
+                </div>
+
+                <div class="service-item operational">
+                    <div class="service-icon">💧</div>
+                    <div class="service-content">
+                        <h4>Water Supply (WASAC)</h4>
+                        <p class="status operational">✅ Operational</p>
+                        <small>All districts stable</small>
+                    </div>
+                </div>
+
+                <div class="service-item operational">
+                    <div class="service-icon">📶</div>
+                    <div class="service-content">
+                        <h4>Telecom</h4>
+                        <p class="status operational">✅ Operational</p>
+                        <small>All providers operational</small>
+                    </div>
+                </div>
+
+                <button class="view-details-btn" onclick="viewRegionDetails('western')">View Details →</button>
+            </div>
+
+            <!-- Northern Province -->
+            <div class="region-status-card">
+                <div class="region-header">
+                    <h3>🌍 Northern Province</h3>
+                    <span class="update-time">Updated: Today 13:20</span>
+                </div>
+
+                <div class="service-item operational">
+                    <div class="service-icon">⚡</div>
+                    <div class="service-content">
+                        <h4>Electricity (REG)</h4>
+                        <p class="status operational">✅ Operational</p>
+                        <small>All districts stable</small>
+                    </div>
+                </div>
+
+                <div class="service-item operational">
+                    <div class="service-icon">💧</div>
+                    <div class="service-content">
+                        <h4>Water Supply (WASAC)</h4>
+                        <p class="status operational">✅ Operational</p>
+                        <small>All districts stable</small>
+                    </div>
+                </div>
+
+                <div class="service-item operational">
+                    <div class="service-icon">📶</div>
+                    <div class="service-content">
+                        <h4>Telecom</h4>
+                        <p class="status operational">✅ Operational</p>
+                        <small>All providers operational</small>
+                    </div>
+                </div>
+
+                <button class="view-details-btn" onclick="viewRegionDetails('northern')">View Details →</button>
+            </div>
+
+            <!-- Eastern Province -->
+            <div class="region-status-card">
+                <div class="region-header">
+                    <h3>🌍 Eastern Province</h3>
+                    <span class="update-time">Updated: Today 11:50</span>
+                </div>
+
+                <div class="service-item operational">
+                    <div class="service-icon">⚡</div>
+                    <div class="service-content">
+                        <h4>Electricity (REG)</h4>
+                        <p class="status operational">✅ Operational</p>
+                        <small>All districts stable</small>
+                    </div>
+                </div>
+
+                <div class="service-item operational">
+                    <div class="service-icon">💧</div>
+                    <div class="service-content">
+                        <h4>Water Supply (WASAC)</h4>
+                        <p class="status operational">✅ Operational</p>
+                        <small>All districts stable</small>
+                    </div>
+                </div>
+
+                <div class="service-item operational">
+                    <div class="service-icon">📶</div>
+                    <div class="service-content">
+                        <h4>Telecom</h4>
+                        <p class="status operational">✅ Operational</p>
+                        <small>All providers operational</small>
+                    </div>
+                </div>
+
+                <button class="view-details-btn" onclick="viewRegionDetails('eastern')">View Details →</button>
+            </div>
+        </div>
+
+        <!-- Active Alerts/Issues Section -->
+        <div style="margin-top: 50px; padding: 25px; background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+            <h3 style="color: #d32f2f; margin-bottom: 20px;">⚠️ Active Alerts</h3>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="padding: 15px; background: #fff3e0; border-left: 4px solid #ff9800; border-radius: 4px;">
+                    <strong>🚨 Water Outage - Kigali Gasabo</strong>
+                    <p style="margin: 8px 0;">Water supply interrupted on KG 123 street due to underground pipe maintenance. Expected resolution: 18:00 today.</p>
+                    <small style="color: #999;">Reported: 2 hours ago</small>
+                </div>
+                <div style="padding: 15px; background: #fff3e0; border-left: 4px solid #ff9800; border-radius: 4px;">
+                    <strong>⚡ Scheduled Maintenance - Western Province</strong>
+                    <p style="margin: 8px 0;">Planned electricity maintenance in Nyamasheke district tonight 19:00-20:00. Please plan accordingly.</p>
+                    <small style="color: #999;">Announced: 5 hours ago</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Section -->
+        <div style="margin-top: 50px; padding: 25px; background: #e3f2fd; border-radius: 10px;">
+            <h3 style="color: #1849a8; margin-bottom: 15px;">ℹ️ Need Help?</h3>
+            <p>Is your area experiencing a service issue not listed above? <a href="citizen-report-form.html" style="color: #1849a8; font-weight: 500; text-decoration: none;">Report it here</a></p>
+            <p style="margin-top: 10px;">For emergencies, contact your utility provider directly:</p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>REG (Electricity): 1212</li>
+                <li>WASAC (Water): 1234</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function updateDistrictFilter() {
+            // Implementation for updating districts based on province selection
+        }
+
+        function viewRegionDetails(region) {
+            alert(`Detailed status for ${region} region coming soon!`);
+        }
+    </script>
+</body>
+</html>

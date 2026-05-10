@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citizen Portal - CUURS</title>
+    <link rel="stylesheet" href="citizen-portal.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>🏠 CUURS Citizen Portal</h1>
+            <span class="subtitle">Report Issues & Check Status</span>
+        </div>
+        <div class="navbar-right">
+            <a href="citizen-portal.html" class="nav-link">🏠 Home</a>
+            <a href="citizen-report-form.html" class="nav-link">📋 Report Issue</a>
+            <a href="status-portal.html" class="nav-link">📊 Check Status</a>
+            <a href="login_form.html" class="nav-link">👤 Account</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="page-header">
+            <h2>Welcome to CUURS</h2>
+            <p>The Unified Citizen Utility & Reporting System</p>
+        </div>
+
+        <!-- Hero Section -->
+        <div style="background: linear-gradient(135deg, #1849a8 0%, #0f3a7d 100%); color: white; padding: 40px; border-radius: 10px; margin-bottom: 40px; text-align: center;">
+            <h3 style="font-size: 24px; margin-bottom: 15px;">Help us improve utility services in Rwanda</h3>
+            <p style="font-size: 16px; margin-bottom: 25px; opacity: 0.95;">Report water leaks, fallen poles, and other infrastructure issues. Get real-time updates on utility status in your area.</p>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <a href="citizen-report-form.html" class="card-btn" style="background: white; color: #1849a8;">📋 Report an Issue</a>
+                <a href="status-portal.html" class="card-btn">📊 Check Status</a>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div style="margin-bottom: 50px;">
+            <h2 style="text-align: center; color: #1849a8; margin-bottom: 30px; font-size: 24px;">What You Can Do</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px;">
+                <div class="card">
+                    <div class="card-icon">📋</div>
+                    <h3>Report Issues</h3>
+                    <p>Quickly report water leaks, fallen power poles, voltage issues, or other problems affecting utilities in your area.</p>
+                    <a href="citizen-report-form.html" class="card-btn">Start Report</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>Check Live Status</h3>
+                    <p>View real-time utility status (electricity, water, telecom) for your region and get alerts about outages.</p>
+                    <a href="status-portal.html" class="card-btn">View Status</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📱</div>
+                    <h3>Get Updates via SMS</h3>
+                    <p>Receive SMS alerts about utility outages, maintenance schedules, and important updates for your area.</p>
+                    <a href="#" class="card-btn">Enable SMS</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">👁️</div>
+                    <h3>Track Your Reports</h3>
+                    <p>Follow the status of your submitted reports and see when issues are being investigated and resolved.</p>
+                    <a href="#" class="card-btn">My Reports</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔔</div>
+                    <h3>Notifications</h3>
+                    <p>Customize your notification settings to get updates about issues you care about.</p>
+                    <a href="#" class="card-btn">Settings</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🆘</div>
+                    <h3>Emergency Support</h3>
+                    <p>Quick access to emergency contacts and resources for your location.</p>
+                    <a href="#" class="card-btn">Get Help</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works Section -->
+        <div style="background: #f9f9f9; padding: 40px; border-radius: 10px; margin-bottom: 50px;">
+            <h2 style="text-align: center; color: #1849a8; margin-bottom: 30px; font-size: 24px;">How CUURS Works</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px;">
+                <div style="text-align: center;">
+                    <div style="width: 60px; height: 60px; background: #1849a8; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 15px;">1️⃣</div>
+                    <h4 style="color: #1849a8; margin-bottom: 10px;">Report Issue</h4>
+                    <p style="color: #666; font-size: 14px;">Use the form to report any utility issue you notice in your area.</p>
+                </div>
+
+                <div style="text-align: center;">
+                    <div style="width: 60px; height: 60px; background: #1849a8; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 15px;">2️⃣</div>
+                    <h4 style="color: #1849a8; margin-bottom: 10px;">Alert Sent</h4>
+                    <p style="color: #666; font-size: 14px;">Admin receives your report and alerts utility companies immediately.</p>
+                </div>
+
+                <div style="text-align: center;">
+                    <div style="width: 60px; height: 60px; background: #1849a8; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 15px;">3️⃣</div>
+                    <h4 style="color: #1849a8; margin-bottom: 10px;">Action Taken</h4>
+                    <p style="color: #666; font-size: 14px;">Utility companies respond and send updates via SMS alerts.</p>
+                </div>
+
+                <div style="text-align: center;">
+                    <div style="width: 60px; height: 60px; background: #1849a8; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 15px;">4️⃣</div>
+                    <h4 style="color: #1849a8; margin-bottom: 10px;">Issue Resolved</h4>
+                    <p style="color: #666; font-size: 14px;">You receive confirmation when the issue is fixed.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQs Section -->
+        <div style="margin-bottom: 50px;">
+            <h2 style="text-align: center; color: #1849a8; margin-bottom: 30px; font-size: 24px;">Frequently Asked Questions</h2>
+            
+            <div style="background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); overflow: hidden;">
+                <div style="padding: 20px; border-bottom: 1px solid #eee; cursor: pointer;" onclick="toggleFAQ(this)">
+                    <h4 style="color: #1849a8; margin: 0; display: flex; justify-content: space-between; align-items: center;">
+                        <span>How do I report an issue?</span>
+                        <span style="font-size: 20px;">▼</span>
+                    </h4>
+                    <p style="color: #666; margin: 10px 0 0 0; display: none; font-size: 14px;">Click "Report Issue" on the home page to fill out a quick form with details about the problem, including the location, type of issue, and any photos if available.</p>
+                </div>
+
+                <div style="padding: 20px; border-bottom: 1px solid #eee; cursor: pointer;" onclick="toggleFAQ(this)">
+                    <h4 style="color: #1849a8; margin: 0; display: flex; justify-content: space-between; align-items: center;">
+                        <span>How long does it take to resolve issues?</span>
+                        <span style="font-size: 20px;">▼</span>
+                    </h4>
+                    <p style="color: #666; margin: 10px 0 0 0; display: none; font-size: 14px;">Response time varies by issue type and location. High-priority issues (like fallen poles) are typically addressed within hours, while maintenance issues may take longer. You'll receive updates via SMS.</p>
+                </div>
+
+                <div style="padding: 20px; border-bottom: 1px solid #eee; cursor: pointer;" onclick="toggleFAQ(this)">
+                    <h4 style="color: #1849a8; margin: 0; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Will I receive SMS updates?</span>
+                        <span style="font-size: 20px;">▼</span>
+                    </h4>
+                    <p style="color: #666; margin: 10px 0 0 0; display: none; font-size: 14px;">Yes! When you report an issue, you'll receive SMS updates at key stages. Make sure your phone number is correctly entered when submitting your report.</p>
+                </div>
+
+                <div style="padding: 20px; cursor: pointer;" onclick="toggleFAQ(this)">
+                    <h4 style="color: #1849a8; margin: 0; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Is my personal information safe?</span>
+                        <span style="font-size: 20px;">▼</span>
+                    </h4>
+                    <p style="color: #666; margin: 10px 0 0 0; display: none; font-size: 14px;">Yes, we take privacy seriously. Your information is only shared with relevant utility companies when needed to resolve your issue.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Section -->
+        <div style="background: #ffebee; padding: 30px; border-radius: 10px; border-left: 4px solid #f44336; margin-bottom: 50px;">
+            <h3 style="color: #f44336; margin-top: 0;">🚨 Emergency Issues</h3>
+            <p style="margin-bottom: 15px;">For immediate emergencies that pose safety risks:</p>
+            <ul style="margin-left: 20px;">
+                <li><strong>Fallen power poles or damaged lines:</strong> Call REG immediately at <strong>1212</strong></li>
+                <li><strong>Major water leaks/burst pipes:</strong> Call WASAC at <strong>1234</strong></li>
+                <li><strong>Gas leaks or other hazards:</strong> Call emergency services at <strong>112</strong></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 CUURS - Unified Citizen Utility & Reporting System | Ministry of Infrastructure, Rwanda</p>
+    </footer>
+
+    <script>
+        function toggleFAQ(element) {
+            const answer = element.querySelector('p');
+            element.classList.toggle('active');
+            if (answer.style.display === 'none') {
+                answer.style.display = 'block';
+            } else {
+                answer.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <div class="navbar">
+        <h1>Profile</h1>
+        <a href="#" class="logout_btn" onclick="handleLogout(event)">Logout</a>
+    </div>
+
+    <main class="content">
+        <h2>Hello, <span id="username">User</span></h2>
+        <p>This is your personal profile area where you can modify your information.</p>
+        <div class="cards_container">
+            <div class="card">
+                <h3>🖊️ Edit Profile</h3>
+                <p>Change your name, bio, or other details.</p>
+                <a class="card-btn" href="#">Go to Editor</a>
+            </div>
+            <div class="card">
+                <h3>📷 Upload Avatar</h3>
+                <p>Choose a picture for your profile.</p>
+                <a class="card-btn" href="#">Upload</a>
+            </div>
+            <div class="card">
+                <h3>🔒 Security</h3>
+                <p>Update password and enable 2FA.</p>
+                <a class="card-btn" href="#">Manage</a>
+            </div>
+        </div>
+        <p><a href="dashboard.html">Back to Dashboard</a></p>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const username = localStorage.getItem('username') || 'User';
+            document.getElementById('username').textContent = username;
+        });
+
+        function handleLogout(event) {
+            event.preventDefault();
+            localStorage.removeItem('username');
+            window.location.href = 'login_form.html';
+        }
+    </script>
+</body>
+</html>

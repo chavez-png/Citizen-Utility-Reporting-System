@@ -1,0 +1,107 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.register_form {
+    width: 420px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+.register_form form{
+    display: flex;
+    flex-direction: column;
+}
+.register_form header{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 26px;
+    font-weight: bold;
+    color: white;
+    background-color: #425436;
+}
+.register_form header i {
+    margin-right: 10px;
+}
+.register_form form{
+    padding: 30px;
+    gap: 20px;
+}
+.form-group {
+    width: 100%;
+    margin-bottom: 15px;
+}
+.input-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.input-icon i {
+    position: absolute;
+    left: 15px;
+    color: #425436;
+    font-size: 18px;
+}
+.input-icon input {
+    width: 100%;
+    padding: 14px 15px 14px 45px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    transition: all 0.3s ease;
+}
+.input-icon input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.2);
+    background-color: #f9f9f9;
+}
+.input-icon input::placeholder {
+    color: #aaa;
+}
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+.submit-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+.submit-btn:active {
+    transform: translateY(0);
+}
+.login-link {
+    text-align: center;
+    margin-top: 15px;
+    color: #666;
+    font-size: 14px;
+}
+.login-link a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+.login-link a:hover {
+    color: #45a049;
+    text-decoration: underline;
+}

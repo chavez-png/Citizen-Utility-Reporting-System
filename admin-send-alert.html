@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send SMS Alerts - CUURS Admin</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="admin-forms.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>🏛️ CUURS Admin</h1>
+            <span class="system-name">Citizen Utility & Reporting System</span>
+        </div>
+        <div class="navbar-right">
+            <span class="admin-status">👤 <span id="adminUsername">Admin</span></span>
+            <a href="#" class="logout_btn" onclick="handleLogout(event)">Logout</a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <div class="nav-section">
+            <h3>DASHBOARD</h3>
+            <a href="dashboard.html" class="nav-item">📊 Overview</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>UTILITY MANAGEMENT</h3>
+            <a href="admin-outages.html" class="nav-item">⚠️ Manage Outages</a>
+            <a href="admin-send-alert.html" class="nav-item active">📱 Send SMS Alerts</a>
+            <a href="admin-view-reports.html" class="nav-item">📋 View Reports</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>ADMINISTRATION</h3>
+            <a href="admin-users.html" class="nav-item">👥 User Management</a>
+            <a href="admin-settings.html" class="nav-item">⚙️ Settings</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>PUBLIC</h3>
+            <a href="status-portal.html" class="nav-item">🌍 Public Status Portal</a>
+            <a href="citizen-portal.html" class="nav-item">📲 Citizen Portal</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h2>📱 Send SMS Alert</h2>
+            <p>Send targeted utility alerts to specific regions</p>
+        </div>
+
+        <div class="form-container">
+            <form id="alertForm" onsubmit="handleSendAlert(event)">
+                <div class="form-section">
+                    <h3>Target Location</h3>
+                    <p class="form-help">Select the geographic area affected by this issue</p>
+
+                    <div class="form-group">
+                        <label for="province">Province *</label>
+                        <select id="province" required onchange="updateDistricts()">
+                            <option value="">-- Select Province --</option>
+                            <option value="kigali">Kigali City</option>
+                            <option value="southern">Southern Province</option>
+                            <option value="western">Western Province</option>
+                            <option value="northern">Northern Province</option>
+                            <option value="eastern">Eastern Province</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="district">District *</label>
+                        <select id="district" required onchange="updateSectors()">
+                            <option value="">-- Select District --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sector">Sector (Optional)</label>
+                        <select id="sector">
+                            <option value="">-- All Sectors --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cell">Cell (Optional)</label>
+                        <select id="cell">
+                            <option value="">-- All Cells --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Utility Service</h3>
+                    <div class="form-group">
+                        <label for="service">Affected Service *</label>
+                        <select id="service" required>
+                            <option value="">-- Select Service --</option>
+                            <option value="electricity">⚡ Electricity (REG)</option>
+                            <option value="water">💧 Water (WASAC)</option>
+                            <option value="telecom">📶 Telecom</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issueType">Issue Type *</label>
+                        <select id="issueType" required>
+                            <option value="">-- Select Issue Type --</option>
+                            <option value="outage">Outage</option>
+                            <option value="maintenance">Scheduled Maintenance</option>
+                            <option value="emergency">Emergency</option>
+                            <option value="update">Service Update</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Alert Message</h3>
+                    <div class="form-group">
+                        <label for="subject">Alert Subject *</label>
+                        <input type="text" id="subject" placeholder="e.g., Water Supply Interruption" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Alert Message *</label>
+                        <textarea id="message" rows="5" placeholder="Enter the alert message citizens will receive" required></textarea>
+                        <small id="charCount" class="char-counter">0/160 characters</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estimatedDuration">Estimated Duration *</label>
+                        <select id="estimatedDuration" required>
+                            <option value="">-- Select Duration --</option>
+                            <option value="lessthan1">Less than 1 hour</option>
+                            <option value="1-3">1-3 hours</option>
+                            <option value="3-6">3-6 hours</option>
+                            <option value="6-24">6-24 hours</option>
+                            <option value="24plus">More than 24 hours</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Delivery Options</h3>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="sendSMS" checked>
+                            Send SMS via Africa's Talking
+                        </label>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="sendWeb" checked>
+                            Display on Web Portal
+                        </label>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="sendPush">
+                            Send Push Notifications
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="window.history.back()">Cancel</button>
+                    <button type="submit" class="btn-primary">📱 Send Alert</button>
+                </div>
+            </form>
+
+            <!-- Recipient Preview -->
+            <div class="recipient-preview">
+                <h3>📊 Recipient Preview</h3>
+                <div id="recipientStats" class="recipient-stats">
+                    <div class="stat">
+                        <span class="stat-label">Estimated Recipients:</span>
+                        <span class="stat-value" id="recipientCount">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Selected Region:</span>
+                        <span class="stat-value" id="regionDisplay">None</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Message Length:</span>
+                        <span class="stat-value" id="messageLength">0/160</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Rwanda administrative data
+        const rwandaData = {
+            kigali: {
+                name: 'Kigali City',
+                districts: {
+                    gasabo: { name: 'Gasabo', sectors: { kimihurura: 'Kimihurura', ndera: 'Ndera', jali: 'Jali' } },
+                    kicukiro: { name: 'Kicukiro', sectors: { kanombe: 'Kanombe', nyarugenge: 'Nyarugenge' } },
+                    nyarugenge: { name: 'Nyarugenge', sectors: { kigali: 'Kigali', cyubahiro: 'Cyubahiro' } }
+                }
+            },
+            southern: {
+                name: 'Southern Province',
+                districts: {
+                    huye: { name: 'Huye', sectors: {} },
+                    muhanga: { name: 'Muhanga', sectors: {} },
+                    nyaruguru: { name: 'Nyaruguru', sectors: {} }
+                }
+            },
+            western: {
+                name: 'Western Province',
+                districts: {
+                    kibuye: { name: 'Karongi', sectors: {} },
+                    kamembe: { name: 'Nyamasheke', sectors: {} },
+                    rusizi: { name: 'Rusizi', sectors: {} }
+                }
+            },
+            northern: {
+                name: 'Northern Province',
+                districts: {
+                    burera: { name: 'Burera', sectors: {} },
+                    nort: { name: 'Gakenke', sectors: {} },
+                    rulindo: { name: 'Rulindo', sectors: {} }
+                }
+            },
+            eastern: {
+                name: 'Eastern Province',
+                districts: {
+                    ngoma: { name: 'Ngoma', sectors: {} },
+                    kirehe: { name: 'Kirehe', sectors: {} },
+                    rwamagana: { name: 'Bugesera', sectors: {} }
+                }
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminName = localStorage.getItem('username') || 'Admin';
+            document.getElementById('adminUsername').textContent = adminName;
+
+            document.getElementById('message').addEventListener('input', function() {
+                const length = this.value.length;
+                document.getElementById('charCount').textContent = length + '/160 characters';
+                document.getElementById('messageLength').textContent = length + '/160';
+            });
+        });
+
+        function updateDistricts() {
+            const province = document.getElementById('province').value;
+            const districtSelect = document.getElementById('district');
+            districtSelect.innerHTML = '<option value="">-- Select District --</option>';
+
+            if (province && rwandaData[province]) {
+                const districts = rwandaData[province].districts;
+                for (let key in districts) {
+                    const option = document.createElement('option');
+                    option.value = key;
+                    option.textContent = districts[key].name;
+                    districtSelect.appendChild(option);
+                }
+                updateRecipientCount();
+            }
+        }
+
+        function updateSectors() {
+            const province = document.getElementById('province').value;
+            const district = document.getElementById('district').value;
+            const sectorSelect = document.getElementById('sector');
+            sectorSelect.innerHTML = '<option value="">-- All Sectors --</option>';
+
+            if (province && district && rwandaData[province] && rwandaData[province].districts[district]) {
+                const sectors = rwandaData[province].districts[district].sectors;
+                for (let key in sectors) {
+                    const option = document.createElement('option');
+                    option.value = key;
+                    option.textContent = sectors[key];
+                    sectorSelect.appendChild(option);
+                }
+            }
+            updateRecipientCount();
+        }
+
+        function updateRecipientCount() {
+            const province = document.getElementById('province').value;
+            const district = document.getElementById('district').value;
+            
+            let regionDisplay = 'None';
+            let count = 0;
+
+            if (province) {
+                regionDisplay = rwandaData[province].name;
+                count = Math.floor(Math.random() * 5000) + 1000;
+
+                if (district) {
+                    regionDisplay += ' > ' + rwandaData[province].districts[district].name;
+                    count = Math.floor(Math.random() * 1500) + 300;
+                }
+            }
+
+            document.getElementById('regionDisplay').textContent = regionDisplay;
+            document.getElementById('recipientCount').textContent = count.toLocaleString();
+        }
+
+        function handleSendAlert(event) {
+            event.preventDefault();
+            const province = document.getElementById('province').value;
+            const district = document.getElementById('district').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            if (!province || !district) {
+                alert('Please select a province and district');
+                return;
+            }
+
+            if (!subject || !message) {
+                alert('Please fill in the alert subject and message');
+                return;
+            }
+
+            // Save to localStorage for demo
+            const alerts = JSON.parse(localStorage.getItem('alerts') || '[]');
+            alerts.push({
+                id: Date.now(),
+                province: provincial,
+                district: district,
+                subject: subject,
+                message: message,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('alerts', JSON.stringify(alerts));
+
+            alert('✅ Alert sent successfully to ' + document.getElementById('recipientCount').textContent + ' recipients!');
+            document.getElementById('alertForm').reset();
+            document.getElementById('charCount').textContent = '0/160 characters';
+            updateRecipientCount();
+        }
+
+        function handleLogout(event) {
+            event.preventDefault();
+            localStorage.removeItem('username');
+            window.location.href = 'login_form.html';
+        }
+    </script>
+</body>
+</html>

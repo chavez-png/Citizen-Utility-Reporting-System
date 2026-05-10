@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activities</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="activities.css">
+</head>
+<body>
+    <div class="navbar">
+        <h1>Activities</h1>
+        <a href="#" class="logout_btn" onclick="handleLogout(event)">Logout</a>
+    </div>
+
+    <main class="content">
+        <h2>Recent Activities</h2>
+        <p>Here’s what you’ve been doing lately.</p>
+        <div class="cards_container">
+            <div class="card">
+                <h3>✅ Logged in</h3>
+                <p>Last seen: Today at 9:00 AM</p>
+            </div>
+            <div class="card">
+                <h3>✍️ Updated profile</h3>
+                <p>Changed bio and avatar yesterday.</p>
+            </div>
+            <div class="card">
+                <h3>📤 Sent message</h3>
+                <p>Replied to John two days ago.</p>
+            </div>
+        </div>
+        <p><a href="dashboard.html">Back to Dashboard</a></p>
+    </main>
+
+    <script>
+        function handleLogout(event) {
+            event.preventDefault();
+            localStorage.removeItem('username');
+            window.location.href = 'login_form.html';
+        }
+    </script>
+</body>
+</html>

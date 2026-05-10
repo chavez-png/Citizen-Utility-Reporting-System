@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Reports - CUURS Admin</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="admin-forms.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>🏛️ CUURS Admin</h1>
+            <span class="system-name">Citizen Utility & Reporting System</span>
+        </div>
+        <div class="navbar-right">
+            <span class="admin-status">👤 <span id="adminUsername">Admin</span></span>
+            <a href="#" class="logout_btn" onclick="handleLogout(event)">Logout</a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <div class="nav-section">
+            <h3>DASHBOARD</h3>
+            <a href="dashboard.html" class="nav-item">📊 Overview</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>UTILITY MANAGEMENT</h3>
+            <a href="admin-outages.html" class="nav-item">⚠️ Manage Outages</a>
+            <a href="admin-send-alert.html" class="nav-item">📱 Send SMS Alerts</a>
+            <a href="admin-view-reports.html" class="nav-item active">📋 View Reports</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>ADMINISTRATION</h3>
+            <a href="admin-users.html" class="nav-item">👥 User Management</a>
+            <a href="admin-settings.html" class="nav-item">⚙️ Settings</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>PUBLIC</h3>
+            <a href="status-portal.html" class="nav-item">🌍 Public Status Portal</a>
+            <a href="citizen-portal.html" class="nav-item">📲 Citizen Portal</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h2>📋 Citizen Issue Reports</h2>
+            <p>Review and manage reports submitted by citizens</p>
+        </div>
+
+        <!-- Filter Section -->
+        <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="font-weight: 500; color: #333;">Status</label>
+                    <select id="statusFilter" onchange="filterReports()">
+                        <option value="">All Reports</option>
+                        <option value="pending">Pending Review</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="font-weight: 500; color: #333;">Issue Type</label>
+                    <select id="typeFilter" onchange="filterReports()">
+                        <option value="">All Types</option>
+                        <option value="water-leak">Water Leak</option>
+                        <option value="fallen-pole">Fallen Pole</option>
+                        <option value="voltage-low">Low Voltage</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="font-weight: 500; color: #333;">Priority</label>
+                    <select id="priorityFilter" onchange="filterReports()">
+                        <option value="">All Priorities</option>
+                        <option value="high">🔴 High</option>
+                        <option value="medium">🟡 Medium</option>
+                        <option value="low">🟢 Low</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Table -->
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Report ID</th>
+                    <th>Citizen Name</th>
+                    <th>Issue Type</th>
+                    <th>Location</th>
+                    <th>Date Reported</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#RPT-2026-001</td>
+                    <td>Jean Habimana</td>
+                    <td>💧 Water Leak</td>
+                    <td>Kigali - Gasabo</td>
+                    <td>2026-03-04 09:15</td>
+                    <td><span class="badge badge-danger">HIGH</span></td>
+                    <td><span class="badge badge-pending">PENDING</span></td>
+                    <td>
+                        <div class="action-icons">
+                            <button class="icon-btn icon-btn-primary" onclick="viewReportDetails(1)" title="View">👁️</button>
+                            <button class="icon-btn icon-btn-primary" title="Edit">✏️</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>#RPT-2026-002</td>
+                    <td>Marie Uwimana</td>
+                    <td>💡 Fallen Pole</td>
+                    <td>Muhanga City</td>
+                    <td>2026-03-04 08:45</td>
+                    <td><span class="badge badge-danger">HIGH</span></td>
+                    <td><span class="badge badge-warning">IN PROGRESS</span></td>
+                    <td>
+                        <div class="action-icons">
+                            <button class="icon-btn icon-btn-primary" onclick="viewReportDetails(2)" title="View">👁️</button>
+                            <button class="icon-btn icon-btn-primary" title="Edit">✏️</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>#RPT-2026-003</td>
+                    <td>Peter Kamanzi</td>
+                    <td>⚡ Low Voltage</td>
+                    <td>Huye - Southern Province</td>
+                    <td>2026-03-03 16:30</td>
+                    <td><span class="badge badge-warning">MEDIUM</span></td>
+                    <td><span class="badge badge-success">RESOLVED</span></td>
+                    <td>
+                        <div class="action-icons">
+                            <button class="icon-btn icon-btn-primary" onclick="viewReportDetails(3)" title="View">👁️</button>
+                            <button class="icon-btn icon-btn-primary" title="Edit">✏️</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Report Details Modal -->
+    <div id="reportModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Report Details</h2>
+                <button class="close-btn" onclick="closeReportModal()">&times;</button>
+            </div>
+            <div id="reportDetails"></div>
+            <div class="form-section" style="margin-top: 20px;">
+                <h3>Update Status</h3>
+                <select id="updateStatus" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 15px;">
+                    <option value="pending">Pending Review</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="resolved">Resolved</option>
+                </select>
+                <textarea placeholder="Add notes (optional)" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; min-height: 80px;"></textarea>
+            </div>
+            <div class="form-actions">
+                <button class="btn-secondary" onclick="closeReportModal()">Cancel</button>
+                <button class="btn-success" onclick="updateReportStatus()">Update Status</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const reportsData = [
+            {
+                id: '#RPT-2026-001',
+                citizen: 'Jean Habimana',
+                phone: '+250700000001',
+                type: 'Water Leak',
+                location: 'KG 123 Street, Kigali - Gasabo',
+                description: 'Water is leaking from underground pipe on KG 123 street, causing flooding',
+                date: '2026-03-04 09:15',
+                priority: 'HIGH',
+                status: 'PENDING',
+                images: ['Water leak affecting 5 households']
+            },
+            {
+                id: '#RPT-2026-002',
+                citizen: 'Marie Uwimana',
+                phone: '+250700000002',
+                type: 'Fallen Pole',
+                location: 'Main Road, Muhanga City',
+                description: 'Electric pole fallen on Main Road near shopping center',
+                date: '2026-03-04 08:45',
+                priority: 'HIGH',
+                status: 'IN PROGRESS',
+                images: ['Pole down on main road']
+            },
+            {
+                id: '#RPT-2026-003',
+                citizen: 'Peter Kamanzi',
+                phone: '+250700000003',
+                type: 'Low Voltage',
+                location: 'Opposite Stadium, Huye',
+                description: 'Voltage fluctuations in the residential area',
+                date: '2026-03-03 16:30',
+                priority: 'MEDIUM',
+                status: 'RESOLVED',
+                images: ['Voltage issue reported']
+            }
+        ];
+
+        let currentReport = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminName = localStorage.getItem('username') || 'Admin';
+            document.getElementById('adminUsername').textContent = adminName;
+        });
+
+        function viewReportDetails(index) {
+            currentReport = reportsData[index - 1];
+            const html = `
+                <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <p><strong>Report ID:</strong> ${currentReport.id}</p>
+                    <p><strong>Citizen:</strong> ${currentReport.citizen}</p>
+                    <p><strong>Phone:</strong> ${currentReport.phone}</p>
+                    <p><strong>Date Reported:</strong> ${currentReport.date}</p>
+                    <p><strong>Issue Type:</strong> ${currentReport.type}</p>
+                    <p><strong>Location:</strong> ${currentReport.location}</p>
+                    <p><strong>Priority:</strong> <span class="badge" style="background: ${currentReport.priority === 'HIGH' ? '#ffcdd2' : currentReport.priority === 'MEDIUM' ? '#ffe0b2' : '#c8e6c9'}">${currentReport.priority}</span></p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <p><strong>Issue Description:</strong></p>
+                    <p style="background: white; padding: 15px; border-radius: 5px; border-left: 4px solid #1849a8;">${currentReport.description}</p>
+                </div>
+            `;
+            document.getElementById('reportDetails').innerHTML = html;
+            document.getElementById('reportModal').classList.add('show');
+        }
+
+        function closeReportModal() {
+            document.getElementById('reportModal').classList.remove('show');
+        }
+
+        function updateReportStatus() {
+            alert('✅ Report status updated successfully');
+            closeReportModal();
+        }
+
+        function filterReports() {
+            // Implementation for filtering
+            console.log('Filtering reports');
+        }
+
+        function handleLogout(event) {
+            event.preventDefault();
+            localStorage.removeItem('username');
+            window.location.href = 'login_form.html';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('reportModal');
+            if (event.target === modal) {
+                modal.classList.remove('show');
+            }
+        };
+    </script>
+</body>
+</html>

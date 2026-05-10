@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Issue - CUURS</title>
+    <link rel="stylesheet" href="citizen-portal.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>📋 Report an Issue</h1>
+            <span class="subtitle">Help us fix utility problems in Rwanda</span>
+        </div>
+        <div class="navbar-right">
+            <a href="citizen-portal.html" class="nav-link">🏠 Home</a>
+            <a href="citizen-report-form.html" class="nav-link">📋 Report Issue</a>
+            <a href="status-portal.html" class="nav-link">📊 Check Status</a>
+            <a href="login_form.html" class="nav-link">👤 Account</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="page-header">
+            <h2>📋 Report a Utility Issue</h2>
+            <p>Help utility companies quickly respond to infrastructure problems in your area</p>
+        </div>
+
+        <form id="reportForm" onsubmit="handleSubmitReport(event)">
+            <!-- Section 1: Your Information -->
+            <div class="form-section">
+                <h3>Your Information</h3>
+                <p class="form-help">Your details help us keep you updated on progress</p>
+
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" placeholder="e.g., Jean Habimana" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" placeholder="e.g., +250700000000" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email (Optional)</label>
+                    <input type="email" id="email" placeholder="e.g., jean@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="method">How would you like to be contacted? *</label>
+                    <select id="method" required>
+                        <option value="">-- Select --</option>
+                        <option value="sms">📱 SMS</option>
+                        <option value="call">☎️ Phone Call</option>
+                        <option value="email">📧 Email</option>
+                        <option value="both">Both SMS & Email</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Section 2: Issue Location -->
+            <div class="form-section">
+                <h3>Issue Location</h3>
+                <p class="form-help">Tell us where the problem is located</p>
+
+                <div class="form-group">
+                    <label for="province">Province *</label>
+                    <select id="province" required onchange="updateDistricts()">
+                        <option value="">-- Select Province --</option>
+                        <option value="kigali">Kigali City</option>
+                        <option value="southern">Southern Province</option>
+                        <option value="western">Western Province</option>
+                        <option value="northern">Northern Province</option>
+                        <option value="eastern">Eastern Province</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="district">District *</label>
+                    <select id="district" required onchange="updateSectors()">
+                        <option value="">-- Select District --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="sector">Sector (Optional)</label>
+                    <select id="sector">
+                        <option value="">-- All Sectors --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="cell">Cell (Optional)</label>
+                    <input type="text" id="cell" placeholder="e.g., Kigali City, Down town area">
+                </div>
+
+                <div class="form-group">
+                    <label for="streetAddress">Street/Landmark Details *</label>
+                    <input type="text" id="streetAddress" placeholder="Be as specific as possible. e.g., Near school, opposite market, etc." required>
+                </div>
+            </div>
+
+            <!-- Section 3: Issue Details -->
+            <div class="form-section">
+                <h3>Issue Details</h3>
+                <p class="form-help">Describe the problem you've noticed</p>
+
+                <div class="form-group">
+                    <label for="serviceType">Affected Service *</label>
+                    <select id="serviceType" required onchange="updateIssueTypes()">
+                        <option value="">-- Select Service --</option>
+                        <option value="electricity">⚡ Electricity (REG)</option>
+                        <option value="water">💧 Water (WASAC)</option>
+                        <option value="telecom">📶 Telecom</option>
+                        <option value="other">🔧 Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="issueType">Issue Type *</label>
+                    <select id="issueType" required>
+                        <option value="">-- Select Issue Type --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="priority">Priority Level *</label>
+                    <select id="priority" required>
+                        <option value="">-- Select Priority --</option>
+                        <option value="high">🔴 High (Safety risk, many affected)</option>
+                        <option value="medium">🟡 Medium (Some impact)</option>
+                        <option value="low">🟢 Low (Minor impact)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Detailed Description *</label>
+                    <textarea id="description" placeholder="Please provide as much detail as possible. What did you see? When did it happen? How many people are affected?" required></textarea>
+                    <small id="charCount" class="char-counter">0/500 characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="affectedPeople">Approximately how many people are affected?</label>
+                    <select id="affectedPeople">
+                        <option value="">-- Select --</option>
+                        <option value="1">Just me</option>
+                        <option value="2-5">2-5 people</option>
+                        <option value="6-20">6-20 people</option>
+                        <option value="20-50">20-50 people</option>
+                        <option value="50plus">50+ people</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Section 4: Evidence -->
+            <div class="form-section">
+                <h3>Evidence (Optional)</h3>
+                <p class="form-help">Photos help us better understand and fix the issue</p>
+
+                <div class="form-group">
+                    <label for="photos">Upload Photos</label>
+                    <input type="file" id="photos" accept="image/*" multiple>
+                    <small style="color: #999;">Max 3 photos, 5MB each</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="video">Upload Video (Optional)</label>
+                    <input type="file" id="video" accept="video/*">
+                    <small style="color: #999;">Max 1 video, 20MB</small>
+                </div>
+            </div>
+
+            <!-- Section 5: Additional Info -->
+            <div class="form-section">
+                <h3>Additional Information</h3>
+
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="isEmergency">
+                        This is an emergency (safety risk)
+                    </label>
+                </div>
+
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="isDuplicate">
+                        I know this issue has been reported before
+                    </label>
+                </div>
+
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="agreeTerms" required>
+                        I agree to share this information with relevant utility companies *
+                    </label>
+                </div>
+
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="agreeFollow">
+                        I want to receive updates about this issue
+                    </label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-actions">
+                <button type="reset" class="btn-secondary">Clear Form</button>
+                <button type="submit" class="btn-primary">✅ Submit Report</button>
+            </div>
+        </form>
+
+        <!-- Info Box -->
+        <div style="background: #e3f2fd; padding: 25px; border-radius: 10px; margin-top: 40px; border-left: 4px solid #1849a8;">
+            <h4 style="color: #1849a8; margin-top: 0;">ℹ️ What Happens Next?</h4>
+            <ol style="margin: 0; padding-left: 20px; color: #333; font-size: 14px; line-height: 1.8;">
+                <li><strong>Confirmation:</strong> You'll receive an SMS confirming your report was received</li>
+                <li><strong>Review:</strong> Our admin team will review and categorize your report</li>
+                <li><strong>Alert:</strong> Relevant utility company will be notified immediately</li>
+                <li><strong>Updates:</strong> You'll receive SMS updates as the issue progresses</li>
+                <li><strong>Resolution:</strong> Once fixed, you'll receive a final confirmation</li>
+            </ol>
+            <p style="margin: 15px 0 0 0; color: #666; font-size: 13px;">⏱️ <strong>Note:</strong> High-priority issues are typically addressed within 2-4 hours. Standard issues may take 24-48 hours.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 CUURS - Unified Citizen Utility & Reporting System | Ministry of Infrastructure, Rwanda</p>
+    </footer>
+
+    <script>
+        // Rwanda administrative data
+        const rwandaData = {
+            kigali: {
+                name: 'Kigali City',
+                districts: {
+                    gasabo: { name: 'Gasabo', sectors: { kimihurura: 'Kimihurura', ndera: 'Ndera', jali: 'Jali', remera: 'Remera' } },
+                    kicukiro: { name: 'Kicukiro', sectors: { kanombe: 'Kanombe', nyarugenge: 'Nyarugenge', gisozi: 'Gisozi' } },
+                    nyarugenge: { name: 'Nyarugenge', sectors: { kigali: 'Kigali', cyubahiro: 'Cyubahiro', muhima: 'Muhima' } }
+                }
+            },
+            southern: {
+                name: 'Southern Province',
+                districts: {
+                    huye: { name: 'Huye', sectors: {} },
+                    muhanga: { name: 'Muhanga', sectors: {} },
+                    nyaruguru: { name: 'Nyaruguru', sectors: {} }
+                }
+            },
+            western: {
+                name: 'Western Province',
+                districts: {
+                    kibuye: { name: 'Karongi', sectors: {} },
+                    kamembe: { name: 'Nyamasheke', sectors: {} },
+                    rusizi: { name: 'Rusizi', sectors: {} }
+                }
+            },
+            northern: {
+                name: 'Northern Province',
+                districts: {
+                    burera: { name: 'Burera', sectors: {} },
+                    gakenke: { name: 'Gakenke', sectors: {} },
+                    rulindo: { name: 'Rulindo', sectors: {} }
+                }
+            },
+            eastern: {
+                name: 'Eastern Province',
+                districts: {
+                    ngoma: { name: 'Ngoma', sectors: {} },
+                    kirehe: { name: 'Kirehe', sectors: {} },
+                    bugesera: { name: 'Bugesera', sectors: {} }
+                }
+            }
+        };
+
+        const issueTypes = {
+            electricity: ['Power Outage', 'Low Voltage', 'Fallen Power Pole', 'Damaged Transformer', 'Damaged Wiring', 'Other'],
+            water: ['Water Leak', 'No Water Supply', 'Water Discoloration', 'Burst Pipe', 'Low Pressure', 'Other'],
+            telecom: ['Network Outage', 'Poor Signal', 'Damaged Equipment', 'Other'],
+            other: ['Other']
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const descriptionField = document.getElementById('description');
+            descriptionField.addEventListener('input', function() {
+                const length = this.value.length;
+                document.getElementById('charCount').textContent = length + '/500 characters';
+            });
+
+            // Set current date
+            const reportDate = new Date().toLocaleDateString('en-RW');
+        });
+
+        function updateDistricts() {
+            const province = document.getElementById('province').value;
+            const districtSelect = document.getElementById('district');
+            districtSelect.innerHTML = '<option value="">-- Select District --</option>';
+
+            if (province && rwandaData[province]) {
+                const districts = rwandaData[province].districts;
+                for (let key in districts) {
+                    const option = document.createElement('option');
+                    option.value = key;
+                    option.textContent = districts[key].name;
+                    districtSelect.appendChild(option);
+                }
+            }
+        }
+
+        function updateSectors() {
+            const province = document.getElementById('province').value;
+            const district = document.getElementById('district').value;
+            const sectorSelect = document.getElementById('sector');
+            sectorSelect.innerHTML = '<option value="">-- All Sectors --</option>';
+
+            if (province && district && rwandaData[province] && rwandaData[province].districts[district]) {
+                const sectors = rwandaData[province].districts[district].sectors;
+                for (let key in sectors) {
+                    const option = document.createElement('option');
+                    option.value = key;
+                    option.textContent = sectors[key];
+                    sectorSelect.appendChild(option);
+                }
+            }
+        }
+
+        function updateIssueTypes() {
+            const serviceType = document.getElementById('serviceType').value;
+            const issueTypeSelect = document.getElementById('issueType');
+            issueTypeSelect.innerHTML = '<option value="">-- Select Issue Type --</option>';
+
+            if (serviceType && issueTypes[serviceType]) {
+                issueTypes[serviceType].forEach(type => {
+                    const option = document.createElement('option');
+                    option.value = type;
+                    option.textContent = type;
+                    issueTypeSelect.appendChild(option);
+                });
+            }
+        }
+
+        function handleSubmitReport(event) {
+            event.preventDefault();
+
+            const fullName = document.getElementById('fullName').value;
+            const phone = document.getElementById('phone').value;
+            const province = document.getElementById('province').value;
+            const district = document.getElementById('district').value;
+            const serviceType = document.getElementById('serviceType').value;
+            const issueType = document.getElementById('issueType').value;
+            const description = document.getElementById('description').value;
+
+            if (!fullName || !phone || !province || !district || !serviceType || !issueType || !description) {
+                alert('❌ Please fill all required fields');
+                return;
+            }
+
+            // Generate report ID
+            const reportId = 'RPT-' + Date.now();
+
+            // Save to localStorage (in real app, this would go to backend)
+            const report = {
+                id: reportId,
+                name: fullName,
+                phone: phone,
+                province: province,
+                district: district,
+                service: serviceType,
+                issue: issueType,
+                description: description,
+                timestamp: new Date().toLocaleString(),
+                status: 'Received'
+            };
+
+            localStorage.setItem('lastReport', JSON.stringify(report));
+
+            // Show success message
+            alert(`✅ Report submitted successfully!\n\nYour Report ID: ${reportId}\n\nYou will receive SMS updates at ${phone}`);
+
+            // Reset form
+            document.getElementById('reportForm').reset();
+            document.getElementById('charCount').textContent = '0/500 characters';
+
+            // Redirect after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'citizen-portal.html';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

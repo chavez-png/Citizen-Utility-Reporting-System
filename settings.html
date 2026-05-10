@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+    <div class="navbar">
+        <h1>Settings</h1>
+        <a href="#" class="logout_btn" onclick="handleLogout(event)">Logout</a>
+    </div>
+
+    <main class="content">
+        <h2>Account Settings</h2>
+        <p>Adjust your preferences and system configurations.</p>
+        <div class="cards_container">
+            <div class="card">
+                <h3>🔔 Notifications</h3>
+                <p>Toggle email or push alerts.</p>
+                <a class="card-btn" href="#">Configure</a>
+            </div>
+            <div class="card">
+                <h3>🌐 Privacy</h3>
+                <p>Control what others see.</p>
+                <a class="card-btn" href="#">Review</a>
+            </div>
+            <div class="card">
+                <h3>🧾 Billing</h3>
+                <p>View invoices and payment methods.</p>
+                <a class="card-btn" href="#">Open</a>
+            </div>
+        </div>
+        <p><a href="dashboard.html">Back to Dashboard</a></p>
+    </main>
+
+    <script>
+        function handleLogout(event) {
+            event.preventDefault();
+            localStorage.removeItem('username');
+            window.location.href = 'login_form.html';
+        }
+    </script>
+</body>
+</html>

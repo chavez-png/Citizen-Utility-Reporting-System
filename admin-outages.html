@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Outages - CUURS Admin</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="admin-forms.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>🏛️ CUURS Admin</h1>
+            <span class="system-name">Citizen Utility & Reporting System</span>
+        </div>
+        <div class="navbar-right">
+            <span class="admin-status">👤 <span id="adminUsername">Admin</span></span>
+            <a href="#" class="logout_btn" onclick="handleLogout(event)">Logout</a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <div class="nav-section">
+            <h3>DASHBOARD</h3>
+            <a href="dashboard.html" class="nav-item">📊 Overview</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>UTILITY MANAGEMENT</h3>
+            <a href="admin-outages.html" class="nav-item active">⚠️ Manage Outages</a>
+            <a href="admin-send-alert.html" class="nav-item">📱 Send SMS Alerts</a>
+            <a href="admin-view-reports.html" class="nav-item">📋 View Reports</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>ADMINISTRATION</h3>
+            <a href="admin-users.html" class="nav-item">👥 User Management</a>
+            <a href="admin-settings.html" class="nav-item">⚙️ Settings</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>PUBLIC</h3>
+            <a href="status-portal.html" class="nav-item">🌍 Public Status Portal</a>
+            <a href="citizen-portal.html" class="nav-item">📲 Citizen Portal</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h2>⚠️ Manage Utility Outages</h2>
+            <p>Log, track, and resolve utility service interruptions</p>
+        </div>
+
+        <!-- Filter Section -->
+        <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="font-weight: 500; color: #333;">Filter by Status</label>
+                    <select id="statusFilter" onchange="filterOutages()">
+                        <option value="">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="font-weight: 500; color: #333;">Service Type</label>
+                    <select id="serviceFilter" onchange="filterOutages()">
+                        <option value="">All Services</option>
+                        <option value="electricity">Electricity</option>
+                        <option value="water">Water</option>
+                        <option value="telecom">Telecom</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: flex-end;">
+                    <button class="btn-primary" onclick="openNewOutageModal()" style="flex: 1;">+ New Outage</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outages Table -->
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Location</th>
+                    <th>Start Time</th>
+                    <th>Estimated End</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="outagesTable" style="font-size: 14px;">
+                <tr>
+                    <td><strong>💧 Water</strong></td>
+                    <td>Kigali City - Gasabo</td>
+                    <td>2026-03-04 08:30</td>
+                    <td>2026-03-04 14:30</td>
+                    <td><span class="badge badge-warning">ACTIVE</span></td>
+                    <td>
+                        <div class="action-icons">
+                            <button class="icon-btn icon-btn-primary" title="Edit">✏️</button>
+                            <button class="icon-btn icon-btn-danger" title="Delete">🗑️</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>⚡ Electricity</strong></td>
+                    <td>Muhanga - Rwamagana</td>
+                    <td>2026-03-03 22:00</td>
+                    <td>2026-03-04 06:00</td>
+                    <td><span class="badge badge-success">RESOLVED</span></td>
+                    <td>
+                        <div class="action-icons">
+                            <button class="icon-btn icon-btn-primary" title="Edit">✏️</button>
+                            <button class="icon-btn icon-btn-danger" title="Delete">🗑️</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>⚡ Electricity</strong></td>
+                    <td>Huye - Southern Province</td>
+                    <td>2026-03-04 10:15</td>
+                    <td>2026-03-04 16:15</td>
+                    <td><span class="badge badge-warning">ACTIVE</span></td>
+                    <td>
+                        <div class="action-icons">
+                            <button class="icon-btn icon-btn-primary" title="Edit">✏️</button>
+                            <button class="icon-btn icon-btn-danger" title="Delete">🗑️</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- New Outage Modal -->
+    <div id="outageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Log New Outage</h2>
+                <button class="close-btn" onclick="closeOutageModal()">&times;</button>
+            </div>
+            <form onsubmit="handleSaveOutage(event)">
+                <div class="form-group">
+                    <label for="outageService">Service Type *</label>
+                    <select id="outageService" required>
+                        <option value="">-- Select --</option>
+                        <option value="electricity">⚡ Electricity (REG)</option>
+                        <option value="water">💧 Water (WASAC)</option>
+                        <option value="telecom">📶 Telecom</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="outageProvince">Province *</label>
+                    <select id="outageProvince" required>
+                        <option value="">-- Select --</option>
+                        <option value="kigali">Kigali City</option>
+                        <option value="southern">Southern Province</option>
+                        <option value="western">Western Province</option>
+                        <option value="northern">Northern Province</option>
+                        <option value="eastern">Eastern Province</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="outageDistrict">District *</label>
+                    <input type="text" id="outageDistrict" required placeholder="e.g., Gasabo">
+                </div>
+                <div class="form-group">
+                    <label for="outageStartTime">Start Time *</label>
+                    <input type="datetime-local" id="outageStartTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="outageEndTime">Estimated End Time *</label>
+                    <input type="datetime-local" id="outageEndTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="outageReason">Reason *</label>
+                    <textarea id="outageReason" placeholder="e.g., Maintenance, Infrastructure damage, High demand" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeOutageModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Outage</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminName = localStorage.getItem('username') || 'Admin';
+            document.getElementById('adminUsername').textContent = adminName;
+        });
+
+        function openNewOutageModal() {
+            document.getElementById('outageModal').classList.add('show');
+        }
+
+        function closeOutageModal() {
+            document.getElementById('outageModal').classList.remove('show');
+        }
+
+        function handleSaveOutage(event) {
+            event.preventDefault();
+            alert('✅ Outage logged successfully');
+            closeOutageModal();
+        }
+
+        function filterOutages() {
+            // Implementation for filtering
+            console.log('Filtering outages');
+        }
+
+        function handleLogout(event) {
+            event.preventDefault();
+            localStorage.removeItem('username');
+            window.location.href = 'login_form.html';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('outageModal');
+            if (event.target === modal) {
+                modal.classList.remove('show');
+            }
+        };
+    </script>
+</body>
+</html>

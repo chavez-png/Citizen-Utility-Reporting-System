@@ -1,0 +1,15 @@
+/* Minimal shared styles (no color overrides to preserve existing page themes) */
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+/* Layout helpers only - avoid setting colors so existing CSS remains authoritative */
+.content {
+	max-width: 900px;
+	margin: 28px auto;
+	padding: 20px;
+	border-radius: 8px;
+}
+
+a { text-decoration: none; }
